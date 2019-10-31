@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Preco(
-    momento FLOAT,
+    momento DATETIME,
     valor FLOAT,
     id_preco int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (id_preco)
@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS Bairro(
 ALTER TABLE Bairro AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS Pessoa(
-    login VARCHAR(30),
     endereco VARCHAR(255),
     id_pessoa INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(50),
