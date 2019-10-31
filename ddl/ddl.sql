@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS Preco(
     id_preco int NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (id_preco)
 );
-ALTER TABLE Preco AUTO_INCREMENT=1;
+ALTER TABLE Preco auto_increment=1;
 
 CREATE TABLE IF NOT EXISTS Cidade(
     nome VARCHAR(40),
