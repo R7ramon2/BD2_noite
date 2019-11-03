@@ -38,10 +38,7 @@ CREATE TABLE IF NOT EXISTS Bandeira(
     nome VARCHAR(40),
     id_bandeira INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(40),
-    id_posto INT,
-    PRIMARY KEY (id_bandeira),
-    FOREIGN KEY (id_posto) REFERENCES Posto(cnpj)
-
+    PRIMARY KEY (id_bandeira)
 );
 ALTER TABLE Bandeira AUTO_INCREMENT=1;
 
@@ -62,29 +59,28 @@ CREATE TABLE IF NOT EXISTS Preco(
     id_preco INT NOT NULL auto_increment,
     momento datetime,
     valor_total FLOAT,
-    primary key (id_venda)
+    primary key (id_preco)
 );
 alter table Preco auto_increment=1;
 
-CREATE TABLE IF NOT EXISTS Vende(
-     valor_litro FLOAT,
-     qtd_litro FLOAT,
-     id_posto_combustivel,
-     id_preco INT NOT NULL,
-     FOREIGN KEY (id_preco) REFERENCES Preco(id_preco),
-     FOREIGN KEY (id_posto_combustivel) REFERENCES Posto_combustivel(id_posto_combustivel)
-);
-
-
 CREATE TABLE IF NOT EXISTS Posto_combustivel(
-    id_posto_combustivel INT NOT NULL,
+    id_posto_combustivel INT NOT NULL auto_increment,
     id_combustivel INT NOT NULL,
     cnpj varchar(15) NOT NULL,
     id_preco INT NOT NULL,
     PRIMARY KEY(id_posto_combustivel),
     FOREIGN KEY (id_combustivel) REFERENCES Combustivel(id_combustivel),
-    FOREIGN KEY (cnpj) REFERENCES Posto(cnpj),
-    FOREIGN KEY (id_venda) REFERENCES Venda(id_venda)
+    FOREIGN KEY (cnpj) REFERENCES Posto(cnpj)
+);
+ALTER TABLE Posto_combustivel auto_increment=1;
+
+CREATE TABLE IF NOT EXISTS Vende(
+     valor_litro FLOAT,
+     qtd_litro FLOAT,
+     id_posto_combustivel INT NOT NULL,
+     id_preco INT NOT NULL,
+     FOREIGN KEY (id_preco) REFERENCES Preco(id_preco),
+     FOREIGN KEY (id_posto_combustivel) REFERENCES Posto_combustivel(id_posto_combustivel)
 );
 
 CREATE TABLE IF NOT EXISTS Veiculo (
@@ -105,7 +101,6 @@ CREATE TABLE IF NOT EXISTS Usuario(
     PRIMARY KEY (login),
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
 );
-ALTER TABLE Usuario AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS Tipo_Usuario(
     nome VARCHAR(30),
