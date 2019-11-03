@@ -127,9 +127,9 @@ VALUES
 
 INSERT INTO Bandeira (nome, url)
 values
-	("Shell", "https://www.shell.com.br/", 8),
-	("Ipiranga", "https://portal.ipiranga/wps/portal/ipiranga/inicio", 9),
-    ("Petrobras", "http://www.petrobras.com.br/pt/", 7)
+	("Shell", "https://www.shell.com.br/"),
+	("Ipiranga", "https://portal.ipiranga/wps/portal/ipiranga/inicio"),
+    ("Petrobras", "http://www.petrobras.com.br/pt/")
 ;
 
 INSERT INTO Posto (nome_fantasia, id_bandeira, id_bairro, cnpj, telefone, endereco, razao_social)
