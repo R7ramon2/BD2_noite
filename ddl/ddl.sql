@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS Posto(
     cnpj varchar(40) NOT NULL,
     telefone VARCHAR(15),
     endereco VARCHAR(255),
-    razao_social VARCHAR(40),
+    razao_social VARCHAR(15),
     PRIMARY KEY (cnpj),
     FOREIGN KEY (id_bairro) REFERENCES Bairro(id_bairro),
     FOREIGN KEY (id_bandeira) REFERENCES Bandeira(id_bandeira)
@@ -59,14 +59,14 @@ CREATE TABLE IF NOT EXISTS Preco(
     id_preco INT NOT NULL auto_increment,
     momento datetime,
     valor_total FLOAT,
-    primary key (id_preco)
+     primary key (id_preco)
 );
 alter table Preco auto_increment=1;
 
 CREATE TABLE IF NOT EXISTS Posto_combustivel(
     id_posto_combustivel INT NOT NULL auto_increment,
     id_combustivel INT NOT NULL,
-    cnpj varchar(15) NOT NULL,
+    cnpj varchar(40) NOT NULL,
     id_preco INT NOT NULL,
     PRIMARY KEY(id_posto_combustivel),
     FOREIGN KEY (id_combustivel) REFERENCES Combustivel(id_combustivel),
@@ -107,5 +107,3 @@ CREATE TABLE IF NOT EXISTS Tipo_Usuario(
     login VARCHAR(30),
     FOREIGN KEY (login) REFERENCES Usuario(login)  
 );
-
-
