@@ -1,5 +1,3 @@
-use schema_trabalho;
-
 INSERT INTO Combustivel (nome)
 values
   ("Gasolina Comum"),
@@ -85,9 +83,9 @@ values
   ("R. Silvino Chaves", "Raissa Amorim", 18) -- 36
 ;
 
-INSERT INTO Usuario (id_usuaro, login, senha, id_pessoa)
+INSERT INTO Usuario (id_usuario, login, senha, id_pessoa)
 VALUES
-  (1,"fulanada", "123456", 1),
+  (1,"fulanada", "123456",1),
   (2,"sophlav", "33333s", 2),
   (3,"sebrita", "344432", 3),
   (4,"emanu", "dfm222", 4),
@@ -125,7 +123,7 @@ VALUES
   (36,"raamorim", "1232314", 36)
 ;
 
-INSERT INTO Bandeira (nome, url)
+INSERT INTO Bandeira (nome,id_bandeira,url)
 values
 	("Shell",1,"https://www.shell.com.br/"),
 	("Ipiranga",2,"https://portal.ipiranga/wps/portal/ipiranga/inicio"),
