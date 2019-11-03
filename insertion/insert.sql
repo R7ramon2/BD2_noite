@@ -1,3 +1,5 @@
+use mais_teste;
+
 INSERT INTO Combustivel (nome)
 values
   ("Gasolina Comum"),
@@ -85,48 +87,48 @@ values
 
 INSERT INTO Usuario (id_usuario, login, senha, id_pessoa)
 VALUES
-  (1,"fulanada", "123456",1),
-  (2,"sophlav", "33333s", 2),
-  (3,"sebrita", "344432", 3),
-  (4,"emanu", "dfm222", 4),
-  (5,"carlosnasc", "1001010", 5),
-  (6,"jocamelo", "sadas", 6),
-  (7,"ivinho", "uuuunnnm", 7),
-  (8,"severinalopes", "12321", 8),
-  (9,"giugoes", "kdkdk2", 9),
-  (10,"fwand", "11123312", 10),
-  (11,"cbonacci", "12991", 11),
-  (12,"mmatos", "8888h", 12),
-  (13,"brborges", "kkkkal", 13),
-  (14,"claudinha", "111111", 14),
-  (15,"natjorge", "2222", 15),
-  (16,"ffome", "44444", 16),
-  (17,"bruninha", "123123", 17),
-  (18,"vitorsc", "çaçaça", 18),
-  (19,"juliafelix", "lauaj", 19),
-  (20,"samcham", "31923812", 20),
-  (21,"ericamarq", "asjkdjasd", 21),
-  (22,"taurush", "gçglf", 22),
-  (23,"clarkklenio", "dlflf", 23),
-  (24,"vivimaria", "594i34", 24),
-  (25,"forebs", "fffffpo023", 25),
-  (26,"mariam", "3434932", 26),
-  (27,"luizant", "1123123213", 27),
-  (28,"egroj", "1o1o12k", 28),
-  (29,"xuxuxaxa", "111222344322", 29),
-  (30,"matosdani", "101223", 30),
-  (31,"tavdanielly", "1232332", 31),
-  (32,"maurinha", "111111222", 32),
-  (33,"amiltttt", "wkwkw1", 33),
-  (34,"willwatt", "qoqoqo", 34),
-  (35,"tetetesoura", "10012", 35),
-  (36,"raamorim", "1232314", 36)
+  (2001,"fulanada", "123456",1),
+  (2002,"sophlav", "33333s", 2),
+  (2003,"sebrita", "344432", 3),
+  (2004,"emanu", "dfm222", 4),
+  (2005,"carlosnasc", "1001010", 5),
+  (2006,"jocamelo", "sadas", 6),
+  (2007,"ivinho", "uuuunnnm", 7),
+  (2008,"severinalopes", "12321", 8),
+  (2009,"giugoes", "kdkdk2", 9),
+  (2010,"fwand", "11123312", 10),
+  (2011,"cbonacci", "12991", 11),
+  (2012,"mmatos", "8888h", 12),
+  (2013,"brborges", "kkkkal", 13),
+  (2014,"claudinha", "111111", 14),
+  (2015,"natjorge", "2222", 15),
+  (2016,"ffome", "44444", 16),
+  (2017,"bruninha", "123123", 17),
+  (2018,"vitorsc", "çaçaça", 18),
+  (2019,"juliafelix", "lauaj", 19),
+  (2020,"samcham", "31923812", 20),
+  (2021,"ericamarq", "asjkdjasd", 21),
+  (2022,"taurush", "gçglf", 22),
+  (2023,"clarkklenio", "dlflf", 23),
+  (2024,"vivimaria", "594i34", 24),
+  (2025,"forebs", "fffffpo023", 25),
+  (2026,"mariam", "3434932", 26),
+  (2027,"luizant", "1123123213", 27),
+  (2028,"egroj", "1o1o12k", 28),
+  (2029,"xuxuxaxa", "111222344322", 29),
+  (2030,"matosdani", "101223", 30),
+  (2031,"tavdanielly", "1232332", 31),
+  (2032,"maurinha", "111111222", 32),
+  (2033,"amiltttt", "wkwkw1", 33),
+  (2034,"willwatt", "qoqoqo", 34),
+  (2035,"tetetesoura", "10012", 35),
+  (2036,"raamorim", "1232314", 36)
 ;
 
 INSERT INTO Bandeira (nome,id_bandeira,url)
 values
 	("Shell",1,"https://www.shell.com.br/"),
-	("Ipiranga",2,"https://portal.ipiranga/wps/portal/ipiranga/inicio"),
+	("Ipiranga",2,"https://portal.ipiranga.br"),
     ("Petrobras",3,"http://www.petrobras.com.br/pt/")
 ;
 
