@@ -1,11 +1,11 @@
 -- inserindo
 
-INSERT INTO Combustivel (nome, valor)
+INSERT INTO Combustivel (nome)
 values
-  ("Gasolina Comum", 4.40),
-  ("Gasolina Aditivada", 4.70),
-  ("Diesel", 3.35),
-  ("Etanol", 3.77)
+  ("Gasolina Comum"),
+  ("Gasolina Aditivada"),
+  ("Diesel"),
+  ("Etanol")
 ;
 
 INSERT INTO Cidade (nome, latitude, longitude, estado)
@@ -127,9 +127,9 @@ VALUES
 
 INSERT INTO Bandeira (nome, url)
 values
-	("Shell", "https://www.shell.com.br/"),
-	("Ipiranga", "https://portal.ipiranga/wps/portal/ipiranga/inicio"),
-    ("Petrobras", "http://www.petrobras.com.br/pt/")
+	("Shell", "https://www.shell.com.br/", 8),
+	("Ipiranga", "https://portal.ipiranga/wps/portal/ipiranga/inicio", 9),
+    ("Petrobras", "http://www.petrobras.com.br/pt/", 7)
 ;
 
 INSERT INTO Posto (nome_fantasia, id_bandeira, id_bairro, cnpj, telefone, endereco, razao_social)
@@ -141,13 +141,13 @@ values
     ("Magano Combustiveis", 2, 9, "06.231.192/0001-60", "3448-0903", "Av. Sátiro Ivo, 1096", "Posto Magano"), -- 5 
     ("Posto com GNV", 2, 11, "05.123.124/0001-23", "3344-5542", "PE-060, s/n", "Posto Ipiranga GNV"), -- 6
     ("Posto Petrobras", 3, 14, "07.124.957/0001-56", "3124-7955", "BR-122, 407", "Posto BR Petrolina LTDA"), -- 7
-    ("Posto SHell", 1, 15, "03.347.499/0001-80", "3423-6844", "BR-232, S/N", "Posto Shell Moreno PE"), -- 8
-    ("Posto Opcao", 1, 18, "04.231.589/0001-30", "2342-8711", "Av. Euzely Fabrício de Souza, 600", "POsto Manaira Shell"), -- 9
+    ("Posto Shell", 1, 15, "03.347.499/0001-80", "3423-6844", "BR-232, S/N", "Posto Shell Moreno PE"), -- 8
+    ("Posto Ipiranga", 1, 18, "04.231.589/0001-30", "2342-8711", "Av. Euzely Fabrício de Souza, 600", "POsto Manaira Shell"), -- 9
     ("Posto Big Tambaú", 2, 17, "02.312.836/0001-55", "", "Av. Pres. Epitácio Pessoa, 4940", "Posto tambau Ipiranga"), -- 10
     ("Posto Modelo", 2, 2, "04.214.790/0001-69", "3326-6909", "R. Prof. João Medeiros, 233", "Posto Modelo LTDA") -- 11
 ;
 
-INSERT INTO Venda (litragem, momento)
+INSERT INTO Preco (valor_total, momento)
 values
 	(28.67, "2019-10-01 12:23:04"),
 	(35.02, "2019-10-03 09:39:43"),
@@ -182,7 +182,13 @@ values
 	(29.12, "2019-09-17 00:08:52") -- 31    
 ;
 
-INSERT INTO Posto_combustivel(id_combustivel, cnpj, id_venda)
+INSERT INTO Vende (valor_litro, qtd_litro, id_posto_combustivel, id_preco)
+values
+	(2.67, 10.25, 1, 3),
+	(2.12, "2019-09-17 00:08:52", 1, 4) -- 31    
+;
+
+INSERT INTO Posto_combustivel(id_combustivel, cnpj, id_preco)
 values
 	(1, "04.214.790/0001-69", 1),
 	(1, "02.312.836/0001-55", 2),
@@ -217,69 +223,66 @@ values
 	(1, "04.231.589/0001-30") -- 31 
 ;
 
-INSERT INTO Veiculo (placa, marca, modelo, id_pessoa)
+INSERT INTO Veiculo (placa, marca, modelo, id_pessoa, id_combustivel)
 values
-	("KLA-8904", "Agra", "MARRU", 1),
-	("KLP-7151", "Citroen", "Xsara GLX", 3),
-	("KVT-0155", "Audi", "A1 SportBack", 4),
-	("KBS-1646", "Maserati", "Quattroporte GTS", 6),
-	("KBP-2854", "LAMBORGHINI", "AVENTADOR LP", 8),
-	("KPA-0940", "Daewoo", "Prince Ace", 9),
-	("KIA-5647", "CHERY", "Tiggo", 11),
-	("KOP-4688", "LAMBORGHINI", "Huracan", 20),
-	("KAL-9809", "Mercedes-Benz", "Sprinter 311", 12),
-	("KUF-1698", "Pontiac", "Trans-AM", 30),
-	("KGK-7399", "Fiat", "Idea", 10),
-	("KFY-9164", "Kia Motors", "Picanto", 23),
-	("AUM-5569", "JAC", "J3", 21),
-	("KHG-4758", "Volvo", "V40", 24),
-	("KKV-1039", "Suzuki", "Grand Vitara", 25),
-	("KFK-0846", "Cadillac", "Seville 4.6", 26),
-	("NEZ-4994", "Nissan", "March", 36),
-	("NCJ-8669", "Mitsubishi", "Pajero", 31),
-	("HYB-6260", "Citroen", "C3", 14),
-	("NEJ-8225", "Dodge", "RAM 2500", 2),
-	("MYB-4214", "Subaru", "Legacy GX", 7),
-	("MEX-7682", "Jeep", "Cherokee", 13),
-	("MUP-0366", "Hyundai", "Tucson", 32) -- 23
+	("KLA-8904", "Agra", "MARRU", 1, 1),
+	("KLP-7151", "Citroen", "Xsara GLX", 3, 1),
+	("KVT-0155", "Audi", "A1 SportBack", 4, 2),
+	("KBS-1646", "Maserati", "Quattroporte GTS", 6, 3),
+	("KBP-2854", "LAMBORGHINI", "AVENTADOR LP", 8, 4),
+	("KPA-0940", "Daewoo", "Prince Ace", 9, 4),
+	("KIA-5647", "CHERY", "Tiggo", 11, 2),
+	("KOP-4688", "LAMBORGHINI", "Huracan", 20, 1),
+	("KAL-9809", "Mercedes-Benz", "Sprinter 311", 12, 2),
+	("KUF-1698", "Pontiac", "Trans-AM", 30, 2),
+	("KGK-7399", "Fiat", "Idea", 10, 2),
+	("KFY-9164", "Kia Motors", "Picanto", 23, 1),
+	("AUM-5569", "JAC", "J3", 21, 4),
+	("KHG-4758", "Volvo", "V40", 24, 4),
+	("KKV-1039", "Suzuki", "Grand Vitara", 25, 4),
+	("KFK-0846", "Cadillac", "Seville 4.6", 26, 4),
+	("NEZ-4994", "Nissan", "March", 36, 1),
+	("NCJ-8669", "Mitsubishi", "Pajero", 31, 1),
+	("HYB-6260", "Citroen", "C3", 14, 2),
+	("NEJ-8225", "Dodge", "RAM 2500", 2, 3),
+	("MYB-4214", "Subaru", "Legacy GX", 7, 3),
+	("MEX-7682", "Jeep", "Cherokee", 13, 4),
+	("MUP-0366", "Hyundai", "Tucson", 32, 4) -- 23
 ; 
 
-INSERT INTO Tipo_Usuario (nome, id_usuario)
+INSERT INTO Tipo_Usuario (nome, login)
 values
-	("Cliente", 1),
-	("Cliente", 2),
-	("Cliente", 3),
-	("Cliente", 4),
-	("Gerente", 5),
-	("Cliente", 6),
-	("Cliente", 7),
-	("Cliente", 8),
-	("Cliente", 9),
-	("Cliente", 10),
-	("Cliente", 11),
-	("Cliente", 12),
-	("Cliente", 13),
-	("Cliente", 14),
-	("Gerente", 15),
-	("Gerente", 16),
-	("Gerente", 17),
-	("Gerente", 18),
-	("Gerente", 19),
-	("Cliente", 20),
-	("Cliente", 21),
-	("Gerente", 22),
-	("Cliente", 23),
-	("Cliente", 24),
-	("Cliente", 25),
-	("Cliente", 26),
-	("Gerente", 27),
-	("Gerente", 28),
-	("Gerente", 29),
-	("Cliente", 30),
-	("Cliente", 31),
-	("Cliente", 32),
-	("Gerente", 33),
-	("Gerente", 34),
-	("Gerente", 35),
-	("Cliente", 36)
+	("Cliente","fulanada"),
+	("Cliente","sophlav"),
+	("Cliente","sebrita"), 
+	("Cliente","emanu"),
+	("Gerente","carlosnasc"),  
+	("Cliente","jocamelo"),
+	("Cliente","ivinho"),
+	("Cliente","severinalopes"), 
+	("Cliente","giugoes"),
+	("Cliente","fwand"),
+	("Cliente","cbonacci"),
+	("Cliente","mmatos"),
+	("Cliente","brborges"),
+	("Cliente","claudinha"),
+	("Gerente","natjorge"),
+	("Gerente","ffome"),
+	("Gerente","bruninha"),
+	("Gerente","vitorsc"),
+	("Gerente","juliafelix"), 
+	("Cliente","samcham"),
+	("Cliente","ericamarq"),
+	("Gerente","taurush"),
+	("Cliente","clarkklenio"),
+	("Cliente","vivimaria"),
+	("Cliente","forebs"),
+	("Cliente","mariam"),
+	("Gerente","luizant"),
+	("Gerente","egroj"),
+	("Gerente","xuxuxaxa"),
+	("Cliente","matosdani"),
+	("Cliente","tavdanielly"),
+	("Cliente","maurinha"),
+	("Gerente","amiltttt")
 ;
