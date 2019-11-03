@@ -38,10 +38,7 @@ CREATE TABLE IF NOT EXISTS Bandeira(
     nome VARCHAR(40),
     id_bandeira INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(40),
-    id_posto INT,
     PRIMARY KEY (id_bandeira),
-    FOREIGN KEY (id_posto) REFERENCES Posto(cnpj)
-
 );
 ALTER TABLE Bandeira AUTO_INCREMENT=1;
 
