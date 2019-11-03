@@ -46,7 +46,7 @@ ALTER TABLE Bandeira AUTO_INCREMENT=1;
 CREATE TABLE IF NOT EXISTS Posto(
     nome_fantasia VARCHAR(40),
     id_bandeira INT NOT NULL,
-    cnpj INT NOT NULL,
+    cnpj varchar(15) NOT NULL,
     telefone VARCHAR(15),
     razao_social VARCHAR(15),
     endereco VARCHAR(255),
@@ -66,7 +66,7 @@ alter table Venda auto_increment=1;
 
 CREATE TABLE IF NOT EXISTS Posto_combustivel(
     id_combustivel INT NOT NULL,
-    cnpj INT NOT NULL,
+    cnpj varchar(15) NOT NULL,
     id_venda int NOT NULL,
     FOREIGN KEY (id_combustivel) REFERENCES Combustivel(id_combustivel),
     FOREIGN KEY (cnpj) REFERENCES Posto(cnpj),
