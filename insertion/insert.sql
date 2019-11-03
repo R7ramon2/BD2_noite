@@ -147,38 +147,11 @@ values
     ("Posto Modelo", 2, 2, "04.214.790/0001-69", "3326-6909", "R. Prof. João Medeiros, 233", "Posto Modelo LTDA") -- 11
 ;
 
-INSERT INTO Veiculo (placa, marca, modelo, id_pessoa, id_posto_combustivel)
-values
-	("KLA-8904", "Agra", "MARRU", 1, 1),
-	("KLP-7151", "Citroen", "Xsara GLX", 3, 1),
-	("KVT-0155", "Audi", "A1 SportBack", 4, 2),
-	("KBS-1646", "Maserati", "Quattroporte GTS", 6, 3),
-	("KBP-2854", "LAMBORGHINI", "AVENTADOR LP", 8, 4),
-	("KPA-0940", "Daewoo", "Prince Ace", 9, 4),
-	("KIA-5647", "CHERY", "Tiggo", 11, 2),
-	("KOP-4688", "LAMBORGHINI", "Huracan", 20, 1),
-	("KAL-9809", "Mercedes-Benz", "Sprinter 311", 12, 2),
-	("KUF-1698", "Pontiac", "Trans-AM", 30, 2),
-	("KGK-7399", "Fiat", "Idea", 10, 2),
-	("KFY-9164", "Kia Motors", "Picanto", 23, 1),
-	("AUM-5569", "JAC", "J3", 21, 4),
-	("KHG-4758", "Volvo", "V40", 24, 4),
-	("KKV-1039", "Suzuki", "Grand Vitara", 25, 4),
-	("KFK-0846", "Cadillac", "Seville 4.6", 26, 4),
-	("NEZ-4994", "Nissan", "March", 36, 1),
-	("NCJ-8669", "Mitsubishi", "Pajero", 31, 1),
-	("HYB-6260", "Citroen", "C3", 14, 2),
-	("NEJ-8225", "Dodge", "RAM 2500", 2, 3),
-	("MYB-4214", "Subaru", "Legacy GX", 7, 3),
-	("MEX-7682", "Jeep", "Cherokee", 13, 4),
-	("MUP-0366", "Hyundai", "Tucson", 32, 4) -- 23
-; 
-
 INSERT INTO Preco (momento)
 values
 	("2019-10-01 12:23:04"),
 	("2019-10-03 09:39:43"),
-	("2019-09-31 20:58:31"),
+	("2019-09-30 20:58:31"),
 	("2019-09-30 18:22:22"),
 	("2019-08-29 20:38:58"),
 	("2019-06-24 18:09:28"),
@@ -209,39 +182,69 @@ values
 	("2019-09-17 00:08:52") -- 31    
 ;
 
-INSERT INTO Posto_combustivel(id_combustivel, cnpj, id_preco, id_veiculo)
+
+INSERT INTO Veiculo (placa, marca, modelo, id_pessoa)
 values
-	(1, "04.214.790/0001-69", 1, 1), -- 1
-	(1, "02.312.836/0001-55", 2, 1),
-	(2, "08.156.003/0001-20", 3, 2),
-	(2, "11.481.678/0001-50", 4, 2),
-	(4, "10.583.052/0001-91", 5, 3),
-	(4, "08.156.003/0001-20", 6, 4),
-	(1, "10.583.052/0001-91", 7, 5),
-	(2, "04.214.790/0001-69", 8, 6),
-	(3, "04.231.589/0001-30", 9, 7),
-	(1, "02.312.836/0001-55", 10, 8),
-	(2, "04.214.790/0001-69", 11, 9),
-	(3, "08.156.003/0001-20", 12, 10),
-	(4, "07.124.957/0001-56", 13, 11),
-	(2, "05.123.124/0001-23", 14, 11),
-	(1, "06.231.192/0001-60", 15, 12),
-	(3, "03.347.499/0001-80", 16, 13),
-	(1, "03.347.499/0001-80", 17, 14),
-	(1, "06.231.192/0001-60", 18, 15),
-	(1, "07.124.957/0001-56", 19, 16),
-	(3, "05.123.124/0001-23", 20, 17),
-	(2, "09.433.052/0001-80", 21, 18),
-	(1, "08.156.003/0001-20", 22, 19),
-	(2, "08.156.003/0001-20", 23, 20),
-	(4, "09.433.052/0001-80", 24, 21),
-	(4, "10.583.052/0001-91", 25, 22),
-	(1, "11.481.678/0001-50", 26, 23),
-	(2, "04.214.790/0001-69", 27, 23),
+	("KLA-8904", "Agra", "MARRU", 1),
+	("KLP-7151", "Citroen", "Xsara GLX", 3),
+	("KVT-0155", "Audi", "A1 SportBack", 4),
+	("KBS-1646", "Maserati", "Quattroporte GTS", 6),
+	("KBP-2854", "LAMBORGHINI", "AVENTADOR LP", 8),
+	("KPA-0940", "Daewoo", "Prince Ace", 9),
+	("KIA-5647", "CHERY", "Tiggo", 11),
+	("KOP-4688", "LAMBORGHINI", "Huracan", 20),
+	("KAL-9809", "Mercedes-Benz", "Sprinter 311", 12),
+	("KUF-1698", "Pontiac", "Trans-AM", 30),
+	("KGK-7399", "Fiat", "Idea", 10),
+	("KFY-9164", "Kia Motors", "Picanto", 23),
+	("AUM-5569", "JAC", "J3", 21),
+	("KHG-4758", "Volvo", "V40", 24),
+	("KKV-1039", "Suzuki", "Grand Vitara", 25),
+	("KFK-0846", "Cadillac", "Seville 4.6", 26),
+	("NEZ-4994", "Nissan", "March", 36),
+	("NCJ-8669", "Mitsubishi", "Pajero", 31),
+	("HYB-6260", "Citroen", "C3", 14),
+	("NEJ-8225", "Dodge", "RAM 2500", 2),
+	("MYB-4214", "Subaru", "Legacy GX", 7),
+	("MEX-7682", "Jeep", "Cherokee", 13),
+	("MUP-0366", "Hyundai", "Tucson", 32), -- 23
+    ("GHK-1233", "Nissan", "Versa", 33),
+    ("KFP-1231", "Hyundai", "HB20", 28) -- 25
+; 
+
+INSERT INTO Posto_combustivel(id_combustivel, cnpj, id_preco, placa)
+values
+	(1, "04.214.790/0001-69", 1, "KLA-8904"), -- 1
+	(1, "02.312.836/0001-55", 2, "KLP-7151"),
+	(2, "08.156.003/0001-20", 3, "KVT-0155"),
+	(2, "11.481.678/0001-50", 4, "KBS-1646"),
+	(4, "10.583.052/0001-91", 5, "KBP-2854"),
+	(4, "08.156.003/0001-20", 6, "KPA-0940"),
+	(1, "10.583.052/0001-91", 7, "KIA-5647"),
+	(2, "04.214.790/0001-69", 8, "KOP-4688"),
+	(3, "04.231.589/0001-30", 9, "KAL-9809"),
+	(1, "02.312.836/0001-55", 10, "KUF-1698"),
+	(2, "04.214.790/0001-69", 11, "KGK-7399"),
+	(3, "08.156.003/0001-20", 12, "KFY-9164"),
+	(4, "07.124.957/0001-56", 13, "AUM-5569"),
+	(2, "05.123.124/0001-23", 14, "KHG-4758"),
+	(1, "06.231.192/0001-60", 15, "KKV-1039"),
+	(3, "03.347.499/0001-80", 16, "KFK-0846"),
+	(1, "03.347.499/0001-80", 17, "NEZ-4994"),
+	(1, "06.231.192/0001-60", 18, "NCJ-8669"),
+	(1, "07.124.957/0001-56", 19, "HYB-6260"),
+	(3, "05.123.124/0001-23", 20, "NEJ-8225"),
+	(2, "09.433.052/0001-80", 21, "MYB-4214"),
+	(1, "08.156.003/0001-20", 22, "MEX-7682"),
+	(2, "08.156.003/0001-20", 23, "MUP-0366"),
+	(4, "09.433.052/0001-80", 24, "GHK-1233"),
+	(4, "10.583.052/0001-91", 25, "KPA-0940"),
+	(1, "11.481.678/0001-50", 26, "KUF-1698"),
+	(2, "04.214.790/0001-69", 27, "KFP-1231"),
 	(3, "04.214.790/0001-69", 28, 21),
-	(4, "04.231.589/0001-30", 29, 18),
-	(3, "02.312.836/0001", 30, 19),
-	(1, "04.231.589/0001-30", 31, 20) -- 31 
+	(4, "04.231.589/0001-30", 29, "KFP-1231"),
+	(3, "02.312.836/0001", 30, "GHK-1233"),
+	(1, "04.231.589/0001-30", 31, "KLA-8904") -- 31 
 ;
 
 INSERT INTO Vende (valor_litro, qtd_litro, id_posto_combustivel, id_preco)
@@ -280,39 +283,42 @@ values
 ;
 
 
-INSERT INTO Tipo_Usuario (nome, login)
+INSERT INTO Tipo_Usuario (nome, id_usuario)
 values
-	("Cliente","fulanada"),
-	("Cliente","sophlav"),
-	("Cliente","sebrita"), 
-	("Cliente","emanu"),
-	("Gerente","carlosnasc"),  
-	("Cliente","jocamelo"),
-	("Cliente","ivinho"),
-	("Cliente","severinalopes"), 
-	("Cliente","giugoes"),
-	("Cliente","fwand"),
-	("Cliente","cbonacci"),
-	("Cliente","mmatos"),
-	("Cliente","brborges"),
-	("Cliente","claudinha"),
-	("Gerente","natjorge"),
-	("Gerente","ffome"),
-	("Gerente","bruninha"),
-	("Gerente","vitorsc"),
-	("Gerente","juliafelix"), 
-	("Cliente","samcham"),
-	("Cliente","ericamarq"),
-	("Gerente","taurush"),
-	("Cliente","clarkklenio"),
-	("Cliente","vivimaria"),
-	("Cliente","forebs"),
-	("Cliente","mariam"),
-	("Gerente","luizant"),
-	("Gerente","egroj"),
-	("Gerente","xuxuxaxa"),
-	("Cliente","matosdani"),
-	("Cliente","tavdanielly"),
-	("Cliente","maurinha"),
-	("Gerente","amiltttt")
+	("Cliente", 1),
+	("Cliente", 2),
+	("Cliente", 3), 
+	("Cliente", 4),
+	("Cliente", 6),  
+	("Cliente", 7),
+	("Cliente", 8),
+	("Cliente", 9), 
+	("Cliente", 10),
+	("Cliente", 11),
+	("Cliente", 12),
+	("Cliente", 13),
+	("Cliente", 14),
+	("Cliente", 20),
+	("Cliente", 21),
+	("Cliente", 23),
+	("Cliente",24),
+	("Cliente",25),
+	("Cliente",26), 
+	("Cliente",28),
+	("Cliente",30),
+	("Cliente",31),
+	("Cliente",32), 
+	("Cliente",33),
+	("Cliente",36), -- aqui
+	("Gerente",5),
+	("Gerente",15),
+	("Gerente",16),
+	("Gerente",17),
+	("Gerente",18),
+	("Gerente",19),
+	("Gerente",22),
+	("Gerente",27),
+    ("Gerente",29),
+    ("Gerente",34),
+    ("Gerente",35)
 ;
