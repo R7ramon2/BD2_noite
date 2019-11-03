@@ -1,5 +1,3 @@
-use mais_teste;
-
 INSERT INTO Combustivel (nome)
 values
   ("Gasolina Comum"),
