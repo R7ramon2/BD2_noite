@@ -88,10 +88,10 @@ CREATE TABLE IF NOT EXISTS Veiculo (
     marca VARCHAR(30),
     modelo VARCHAR(30),
     id_pessoa INT NOT NULL,
-    id_combustivel INT NOT NULL,
+    id_posto_combustivel INT NOT NULL,
     PRIMARY KEY (placa),
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa),
-    FOREIGN KEY (id_combustivel) REFERENCES Combustivel(id_combustivel)
+    FOREIGN KEY (id_posto_combustivel) REFERENCES Posto_combustivel(id_posto_combustivel)
 );
 
 CREATE TABLE IF NOT EXISTS Usuario(
