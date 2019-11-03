@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Posto(
     nome_fantasia VARCHAR(40),
     id_bandeira INT NOT NULL,
     id_bairro INT NOT NULL,
-    cnpj varchar(15) NOT NULL,
+    cnpj varchar(40) NOT NULL,
     telefone VARCHAR(15),
     endereco VARCHAR(255),
     razao_social VARCHAR(15),
