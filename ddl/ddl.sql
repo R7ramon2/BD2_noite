@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS Posto(
     cnpj varchar(40) NOT NULL,
     telefone VARCHAR(15),
     endereco VARCHAR(255),
-    razao_social VARCHAR(15),
+    razao_social VARCHAR(40),
     PRIMARY KEY (cnpj),
     FOREIGN KEY (id_bairro) REFERENCES Bairro(id_bairro),
     FOREIGN KEY (id_bandeira) REFERENCES Bandeira(id_bandeira)
