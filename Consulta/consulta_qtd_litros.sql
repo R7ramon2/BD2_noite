@@ -1,4 +1,5 @@
 -- 2- Quantidade de litros vendidos em um posto X, em um determinado tempo.
+-- caso: Qtd litros do posto "Posto BR Casa Forte".
 SELECT p.nome_fantasia, SUM(v.qtd_litro) FROM Posto as p
 INNER JOIN Posto_combustivel as pc 
 ON pc.cnpj = p.cnpj
