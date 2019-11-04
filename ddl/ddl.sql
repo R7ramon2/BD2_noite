@@ -1,3 +1,5 @@
+use mais_teste;
+
 CREATE TABLE IF NOT EXISTS Cidade(
     nome VARCHAR(40),
     latitude VARCHAR(30),
@@ -37,7 +39,7 @@ ALTER TABLE Pessoa AUTO_INCREMENT=1;
 CREATE TABLE IF NOT EXISTS Bandeira(
     nome VARCHAR(40),
     id_bandeira INT NOT NULL AUTO_INCREMENT,
-    url VARCHAR(255),
+    url VARCHAR(40),
     PRIMARY KEY (id_bandeira)
 );
 ALTER TABLE Bandeira AUTO_INCREMENT=1;
@@ -49,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Posto(
     cnpj varchar(40) NOT NULL,
     telefone VARCHAR(15),
     endereco VARCHAR(255),
-    razao_social VARCHAR(255),
+    razao_social VARCHAR(15),
     PRIMARY KEY (cnpj),
     FOREIGN KEY (id_bairro) REFERENCES Bairro(id_bairro),
     FOREIGN KEY (id_bandeira) REFERENCES Bandeira(id_bandeira)
@@ -63,25 +65,14 @@ CREATE TABLE IF NOT EXISTS Preco(
 );
 alter table Preco auto_increment=1;
 
-CREATE TABLE IF NOT EXISTS Veiculo (
-    placa VARCHAR(15) NOT NULL,
-    marca VARCHAR(30),
-    modelo VARCHAR(30),
-    id_pessoa INT NOT NULL,
-    PRIMARY KEY (placa),
-    FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
-);
-
 CREATE TABLE IF NOT EXISTS Posto_combustivel(
     id_posto_combustivel INT NOT NULL auto_increment,
     id_combustivel INT NOT NULL,
-    cnpj varchar(60) NOT NULL,
+    cnpj varchar(40) NOT NULL,
     id_preco INT NOT NULL,
-    placa VARCHAR(15) NOT NULL,
     PRIMARY KEY(id_posto_combustivel),
     FOREIGN KEY (id_combustivel) REFERENCES Combustivel(id_combustivel),
-    FOREIGN KEY (cnpj) REFERENCES Posto(cnpj),
-    FOREIGN KEY (placa) REFERENCES Veiculo(placa)
+    FOREIGN KEY (cnpj) REFERENCES Posto(cnpj)
 );
 ALTER TABLE Posto_combustivel auto_increment=1;
 
@@ -94,18 +85,28 @@ CREATE TABLE IF NOT EXISTS Vende(
      FOREIGN KEY (id_posto_combustivel) REFERENCES Posto_combustivel(id_posto_combustivel)
 );
 
+CREATE TABLE IF NOT EXISTS Veiculo (
+    placa VARCHAR(10) NOT NULL,
+    marca VARCHAR(30),
+    modelo VARCHAR(30),
+    id_pessoa INT NOT NULL,
+    id_posto_combustivel INT NOT NULL,
+    PRIMARY KEY (placa),
+    FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa),
+    FOREIGN KEY (id_posto_combustivel) REFERENCES Posto_combustivel(id_posto_combustivel)
+);
+
 CREATE TABLE IF NOT EXISTS Usuario(
-    id_usuario INT NOT NULL auto_increment,
+    id_usuario INT NOT NULL AUTO_INCREMENT,
     login VARCHAR(30) NOT NULL,
     senha VARCHAR(30),
     id_pessoa INT NOT NULL,
     PRIMARY KEY (id_usuario),
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)
 );
-ALTER TABLE Usuario auto_increment=1;
 
 CREATE TABLE IF NOT EXISTS Tipo_Usuario(
     nome VARCHAR(30),
-    id_usuario INT NOT NULL,
+    id_usuario INT,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)  
 );
