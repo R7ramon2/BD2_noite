@@ -7,4 +7,4 @@
 -- SELECT cnpj, id_combustivel, MAX(conta) FROM (SELECT pc.cnpj, pc.id_combustivel, count(pc.id_combustivel) as conta FROM Posto_combustivel as pc
 -- GROUP BY pc.cnpj, pc.id_combustivel) temp
 -- GROUP BY cnpj, id_combustivel
--- HAVING
+-- TALVEZ USANDO HAVING
