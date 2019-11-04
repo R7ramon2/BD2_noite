@@ -129,7 +129,7 @@ INSERT INTO Bandeira (nome, url)
 values
 	("Shell", "https://www.shell.com.br/"),
 	("Ipiranga", "https://portal.ipiranga/wps/portal/ipiranga/inicio"),
-    ("Petrobras", "http://www.petrobras.com.br/pt/")
+	("Petrobras", "http://www.petrobras.com.br/pt/")
 ;
 
 INSERT INTO Posto (nome_fantasia, id_bandeira, id_bairro, cnpj, telefone, endereco, razao_social)
@@ -142,7 +142,7 @@ values
     ("Posto com GNV", 2, 11, "05.123.124/0001-23", "3344-5542", "PE-060, s/n", "Posto Ipiranga GNV"), -- 6
     ("Posto Petrobras", 3, 14, "07.124.957/0001-56", "3124-7955", "BR-122, 407", "Posto BR Petrolina LTDA"), -- 7
     ("Posto Shell", 1, 15, "03.347.499/0001-80", "3423-6844", "BR-232, S/N", "Posto Shell Moreno PE"), -- 8
-    ("Posto Ipiranga", 1, 18, "04.231.589/0001-30", "2342-8711", "Av. Euzely Fabrício de Souza, 600", "POsto Manaira Shell"), -- 9
+    ("Posto Ipiranga", 2, 18, "04.231.589/0001-30", "2342-8711", "Av. Euzely Fabrício de Souza, 600", "POsto Manaira Shell"), -- 9
     ("Posto Big Tambaú", 2, 17, "02.312.836/0001-55", "", "Av. Pres. Epitácio Pessoa, 4940", "Posto tambau Ipiranga"), -- 10
     ("Posto Modelo", 2, 2, "04.214.790/0001-69", "3326-6909", "R. Prof. João Medeiros, 233", "Posto Modelo LTDA") -- 11
 ;
