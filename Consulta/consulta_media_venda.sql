@@ -1,1 +1,0 @@
--- 5- Qual a média de venda de um posto X em um determinado tempo.
