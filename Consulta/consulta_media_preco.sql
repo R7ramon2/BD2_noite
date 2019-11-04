@@ -1,1 +1,1 @@
--- 5- Qual a média de venda de um posto X em um determinado tempo.
+-- 5- Qual a média de preço de combustivel em um determinado tempo.
