@@ -1,0 +1,6 @@
+Alterar as senhas, encriptando as senhas;
+Criar formulário de criação de usuário (Somente adminsitradores)
+Controle de acesso para usuários, frentista e adminsitrador
+Alterar valor "Cliente" da tabela Tipo_Usuario para frentista
+Alterar layout e o nome da aplicação
+Criar sessão de login para e proteger páginas para não ocorrer acesso não autenticado
