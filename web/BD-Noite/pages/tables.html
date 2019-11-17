@@ -26,6 +26,9 @@
         .fixed-plugin{
           display: none; 
         }
+        .cabecalho{
+          cursor: pointer;
+        }
 
         /* tabela_consulta_1 */
         /* .bmd-form-group{
@@ -145,7 +148,7 @@
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" onclick="log_out();" href="#">Sair</a>
                 </div>
               </li>
             </ul>
@@ -156,55 +159,6 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row" id = "tabelas">
-            <!-- <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title"></h4>
-                  <p class="card-category"></p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover" id = "tabela_consulta_1">
-                      <tbody>
-                       </tbody>
-                      </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title"></h4>
-                  <p class="card-category"></p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover" id = "tabela_consulta_2">
-                      <tbody>
-                       </tbody>
-                      </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title"></h4>
-                  <p class="card-category"></p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover" id = "tabela_consulta_3">
-                      <tbody>
-                       </tbody>
-                      </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
       <footer class="footer" style="display: none;">
@@ -349,8 +303,8 @@
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
-  <script src="https://www.w3schools.com/lib/w3.js"></script>
-  <script src="https://kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+  <script src="../assets/demo/functions.js"></script>
+  
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -525,99 +479,11 @@
 
   <script>
 
-    function get_keys(jsonData){
-      keys = [];
-      for(var obj in jsonData){
-        if(jsonData.hasOwnProperty(obj)){
-          for(var prop in jsonData[obj]){
-              if(jsonData[obj].hasOwnProperty(prop)){
-                keys.push(prop);
-              }
-          }
-        }
-      }
-      newKeys = keys.filter(function(este, i) {
-        return keys.indexOf(este) === i;
-      });
-      return newKeys;
-    }
-
-    function get_values(jsonData){
-      values = [];
-      for(var obj in jsonData){
-        if(jsonData.hasOwnProperty(obj)){
-          for(var prop in jsonData[obj]){
-              if(jsonData[obj].hasOwnProperty(prop)){
-                values.push(jsonData[obj][prop]);
-              }
-          }
-        }
-      }
-      console.log(values);
-      return values;
-    }
-
-
-
-    function create_table(nome_consulta,id_table,titulo_consulta,categoria){
-      var html = '<div class="col-md-12"><div class="card card-plain"><div class="card-header card-header-primary"><h4 class="card-title">'+titulo_consulta+'</h4><p class="card-category">'+categoria+'</p></div><div class="card-body"> <div class="table-responsive"><table class="table table-hover" id = "'+id_table+'">';
-      $.ajax({
-				type: "GET",
-				url: "../php/consultas.php",
-				data: "consulta="+nome_consulta,
-				success: function(response){
-          console.log(response);
-          cabecalho = get_keys(response);
-          id = 1;
-          thead = "<thead class=\"text-primary\"><th onclick = \"w3.sortHTML('#"+id_table+"', '."+id_table+"\_item', 'td:nth-child("+id+")')\">ID</th>";
-          for (i=0;i<cabecalho.length;i++){
-            id++;
-            thead+="<th onclick = \"w3.sortHTML('#"+id_table+"', '."+id_table+"\_item', 'td:nth-child("+id+")')\">"+cabecalho[i]+"</th>";
-          }
-          thead+="</thead>";
-          tbody = "<tbody>";
-          for(i=0;i<response.length;i++){
-            id = i + 1;
-            tbody+="<tr class = \""+ nome_consulta + "_item\"><td>"+ id + "</td>";
-            for(j=0;j<Object.keys(response[i]).length;j++){
-              tbody+="<td>"+ response[i][Object.keys(response[i])[j]] + "</td>";
-            }
-            tbody+= "</tr>"
-          }
-          tbody += "</tbody></table></div></div></div></div>";
-          aux = thead + tbody;
-          html+= aux;
-          
-          $("#tabelas").append(html);
-          $("#"+id_table).DataTable({
-            "bLengthChange": false,
-            "scrollX":false,
-            "lengthMenu":[[5]],
-            "language": {
-              "lengthMenu": "Exibir _MENU_ registros por página",
-              "zeroRecords": "Nenhum registro encontrado",
-              "info": "Página _PAGE_ de _PAGES_",
-              "infoEmpty": "Nenhum registro encontrado",
-              "infoFiltered": "(Filtrado de _MAX_ registros)",
-              "search":"Pesquisar",
-              "paginate":{
-                "previous":"Anterior",
-                "next": "Próximo"
-              }
-            }
-          });
-
-				},
-        error: function(r){
-          alert("Erro ao consultar " + nome_consulta + "\nCod:" + r.status);
-        }
-			});
-    }
-
     $(document).ready(function(){
       create_table("consulta_qtd_vendas","tabela_consulta_1","Quantidade de vendas","Escolha um texto aqui");
-      create_table("consulta_combustivel_mais_vendido","tabela_consulta_2","Combustível mais vendidos","Consulta realizada para obter os combustiveis mais vendidos");
-      create_table("consulta_qtd_litros","tabela_consulta_3","Teste","Teste");
+      setTimeout(function(){
+        create_table("consulta_combustivel_mais_vendido","tabela_consulta_2","Combustível mais vendidos","Consulta realizada para obter os combustiveis mais vendidos");create_table("consulta_qtd_litros","tabela_consulta_3","Teste","Teste");
+      },100);
     });
   </script>
 </body>
