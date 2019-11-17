@@ -7,7 +7,7 @@ class Conexao {
         $password = "root";
         $database = "bd_noite_posto";
         try {
-            $this->pdo = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+            $this->pdo = new PDO("mysql:host=$servername;dbname=$database;port=3306", $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(PDOException $e){
