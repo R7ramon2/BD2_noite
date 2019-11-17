@@ -75,7 +75,7 @@ class Conexao {
     }
 
     function consulta_qtd_litros(){
-        $sql = "SELECT p.nome_fantasia, SUM(v.qtd_litro) FROM Posto as p
+        $sql = "SELECT p.nome_fantasia as \"Nome Fantasia\", SUM(v.qtd_litro) as \"Quantidade em Litros\" FROM Posto as p
         INNER JOIN Posto_combustivel as pc 
         ON pc.cnpj = p.cnpj
         INNER JOIN Vende as v
