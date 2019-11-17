@@ -26,14 +26,14 @@ class Conexao {
     }
 
     function consulta_combustivel_mais_vendido(){
-        $sql = "SELECT c.nome as NomeCombustivel, COUNT(c.nome) as Vezes from Combustivel as c
+        $sql = "SELECT c.nome as \"Nome do Combustivel\", COUNT(c.nome) as \"Quantidade de Vezes\" from Combustivel as c
         INNER JOIN Posto_combustivel as pc
         ON pc.id_combustivel = c.id_combustivel
         INNER JOIN Preco as pr
         ON pr.id_preco = pc.id_preco
         where pr.momento >= \"2019-06-01 00:00:00\"
         GROUP BY c.nome
-        ORDER BY Vezes DESC";
+        ORDER BY \"Quantidade de Vezes\" DESC";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -91,7 +91,7 @@ class Conexao {
     }
 
     function consulta_qtd_vendas(){
-        $sql = "SELECT p.nome_fantasia, COUNT(pr.momento) from Posto as p
+        $sql = "SELECT p.nome_fantasia AS \"Nome fantasia\", COUNT(pr.momento) AS \"Quantidade\" from Posto as p
         INNER JOIN Posto_combustivel as pc
         ON pc.cnpj = p.cnpj
         INNER JOIN Preco as pr
