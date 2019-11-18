@@ -109,8 +109,6 @@ function chart1(){
                 series.push(response[i]["Quantidade de Vezes"])
             }
             
-            console.log(labels);
-            console.log(series);
             if ($('#dash_consulta_1').length != 0 && $('#dash_consulta_1').length != 0) {
                 // ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- //
             
@@ -140,6 +138,60 @@ function chart1(){
                 var animationHeaderChart = new Chartist.Line('#dash_consulta_1', chart, optionsDailySalesChart);
             
               }
+        }
+    });
+}
+
+function chart2(){
+    var nome_consulta = "consulta_posto_mais_vendas";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response) {
+            console.log(response);
+            labels = [];
+            series = [];
+            for(i=0;i<response.length;i++){
+                labels.push(response[i]["NomeDoPosto"]);
+                series.push(response[i]["Vezes"])
+            }
+            console.log(labels);
+            console.log(series);
+            var dataWebsiteViewsChart = {
+                labels: labels,
+                series: [
+                    series
+        
+                ]
+            };
+            var optionsWebsiteViewsChart = {
+                axisX: {
+                showGrid: false
+                },
+                low: 0,
+                high: 10,
+                chartPadding: {
+                top: 0,
+                right: 5,
+                bottom: 0,
+                left: 0
+                }
+            };
+            var responsiveOptions = [
+                ['screen and (max-width: 640px)', {
+                seriesBarDistance: 5,
+                axisX: {
+                    labelInterpolationFnc: function(value) {
+                    return value[0];
+                    }
+                }
+                }]
+            ];
+            var websiteViewsChart = Chartist.Bar('#dash_consulta_2', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
+        
+            //start animation for the Emails Subscription Chart
+            md.startAnimationForBarChart(websiteViewsChart);
         }
     });
 }
