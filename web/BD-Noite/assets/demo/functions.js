@@ -96,34 +96,50 @@ function log_out(){
 }
 
 function chart1(){
-
-    if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {
-    // ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- //
-
-    dataDailySalesChart = {
-      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      series: [
-        [100, 17, 7, 17, 23, 18, 38]
-      ]
-    };
-
-    optionsDailySalesChart = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-      },
-    }
-
-    var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-    var animationHeaderChart = new Chartist.Line('#websiteViewsChart', dataDailySalesChart, optionsDailySalesChart);
-
-  }
+    var nome_consulta = "consulta_combustivel_mais_vendido";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response) {
+            labels = [];
+            series = [];
+            for(i=0;i<response.length;i++){
+                labels.push(response[i]["Nome do Combustivel"]);
+                series.push(response[i]["Quantidade de Vezes"])
+            }
+            
+            console.log(labels);
+            console.log(series);
+            if ($('#dash_consulta_1').length != 0 && $('#dash_consulta_1').length != 0) {
+                // ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- //
+            
+                chart = {
+                  labels: labels,
+                  series: [
+                    series
+                  ]
+                };
+            
+                optionsDailySalesChart = {
+                  lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                  }),
+                  low: 0,
+                  high: 20, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+                  chartPadding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                  },
+                }
+            
+                var dailySalesChart = new Chartist.Line('#dash_consulta_1', chart, optionsDailySalesChart);
+            
+                var animationHeaderChart = new Chartist.Line('#dash_consulta_1', chart, optionsDailySalesChart);
+            
+              }
+        }
+    });
 }
