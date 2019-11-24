@@ -32,7 +32,6 @@ demo = {
   },
 
   initDashboardPageCharts: function() {
-    alert(1);
     if ($('#dailySalesChart').length != 0 || $('#completedTasksChart').length != 0 || $('#websiteViewsChart').length != 0) {
       // ----------==========     Daily Sales Chart initialization    ==========---------- //
 

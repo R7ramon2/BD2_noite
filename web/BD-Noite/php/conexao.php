@@ -47,8 +47,7 @@ class Conexao {
         INNER JOIN Posto_combustivel as pc
         ON pc.id_posto_combustivel = v.id_posto_combustivel
         INNER JOIN Preco as pr
-        ON pr.id_preco = pc.id_preco
-        WHERE pr.momento >= \"2019-06-01 00:00:00\"";
+        ON pr.id_preco = pc.id_preco";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -63,7 +62,6 @@ class Conexao {
         ON pc.cnpj = p.cnpj
         INNER JOIN Preco as pr
         ON pr.id_preco = pc.id_preco
-        where pr.momento >= '12019-06-01 00:00:00'
         GROUP BY p.nome_fantasia
         ORDER BY Vezes DESC ";
 
@@ -96,8 +94,17 @@ class Conexao {
         ON pc.cnpj = p.cnpj
         INNER JOIN Preco as pr
         ON pr.id_preco = pc.id_preco
-        where pr.momento >= \"2019-06-01 00:00:00\"
         GROUP BY p.nome_fantasia";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+  
+        return $stmt->fetchAll();
+    }
+
+    function gabi(){
+        $sql = "select * from Posto_combustivel";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();

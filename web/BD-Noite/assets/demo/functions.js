@@ -30,7 +30,11 @@ function get_values(jsonData) {
     return values;
 }
 
-
+function get_first_letter(word){
+    var matches = word.match(/\b(\w)/g);
+    var acronym = matches.join('');
+    return acronym;
+}
 
 function create_table(nome_consulta, id_table, titulo_consulta, categoria) {
     var html = '<div class="col-md-12"><div class="card card-plain"><div class="card-header card-header-primary"><h4 class="card-title">' + titulo_consulta + '</h4><p class="card-category">' + categoria + '</p></div><div class="card-body"> <div class="table-responsive"><table class="table table-hover" id = "' + id_table + '">';
@@ -149,20 +153,16 @@ function chart2(){
         url: "../php/consultas.php",
         data: "consulta=" + nome_consulta,
         success: function(response) {
-            console.log(response);
             labels = [];
             series = [];
             for(i=0;i<response.length;i++){
-                labels.push(response[i]["NomeDoPosto"]);
+                labels.push(get_first_letter(response[i]["NomeDoPosto"]));
                 series.push(response[i]["Vezes"])
             }
-            console.log(labels);
-            console.log(series);
             var dataWebsiteViewsChart = {
                 labels: labels,
                 series: [
                     series
-        
                 ]
             };
             var optionsWebsiteViewsChart = {
@@ -192,6 +192,61 @@ function chart2(){
         
             //start animation for the Emails Subscription Chart
             md.startAnimationForBarChart(websiteViewsChart);
+        }
+    });
+}
+
+function chart3(){
+    var nome_consulta = "consulta_qtd_vendas";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response) {
+                labels = [];
+                series = [];
+                for(i=0;i<response.length;i++){
+                    labels.push(get_first_letter(response[i]["Nome fantasia"]));
+                    series.push(response[i]["Quantidade"])
+                }
+                dataCompletedTasksChart = {
+                  labels: labels,
+                  series: [
+                    series
+                  ]
+                };
+          
+                optionsCompletedTasksChart = {
+                  lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                  }),
+                  low: 0,
+                  high: 7, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+                  chartPadding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                  }
+                }
+          
+                var completedTasksChart = new Chartist.Line('#dash_consulta_3', dataCompletedTasksChart, optionsCompletedTasksChart);
+          
+                // start animation for the Completed Tasks Chart - Line Chart
+                md.startAnimationForLineChart(completedTasksChart);
+        }
+    });
+}
+
+function media_apuracao(id){
+    var nome_consulta = "consulta_media_preco";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response){
+            value = parseFloat(response[0]["Media"]);
+            $("#"+id).text("$"+value.toFixed(2));
         }
     });
 }
