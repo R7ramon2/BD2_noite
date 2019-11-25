@@ -26,14 +26,32 @@ function get_values(jsonData) {
             }
         }
     }
-    console.log(values);
     return values;
 }
 
-function get_first_letter(word){
+function get_first_letter(word) {
     var matches = word.match(/\b(\w)/g);
     var acronym = matches.join('');
     return acronym;
+}
+
+function setTooltip(id,response,field){
+    setTimeout(function(){
+        $("#"+id).find("svg").find("g").next().find("g").find("line").each(function(){
+            $(this).attr("title",$(this).attr("ct:value"));
+            $(this).tooltip();
+            $(this).css("cursor","context-menu");
+        });
+        $("#"+id).find("svg").find("g").next().next().find("foreignObject").each(function(){
+            for(i=0;i<response.length;i++){
+                if($(this).text() == get_first_letter(response[i][field])){
+                    $(this).attr("title",response[i][field]);
+                    $(this).tooltip();
+                    $(this).css("cursor","context-menu");
+                }
+            }
+        });
+    },1000);
 }
 
 function create_table(nome_consulta, id_table, titulo_consulta, categoria) {
@@ -43,7 +61,6 @@ function create_table(nome_consulta, id_table, titulo_consulta, categoria) {
         url: "../php/consultas.php",
         data: "consulta=" + nome_consulta,
         success: function(response) {
-            console.log(response);
             cabecalho = get_keys(response);
             id = 1;
             thead = "<thead class=\"text-primary cabecalho\"><th><b>ID</b> <i class=\"fa fa-fw fa-sort\"></i></th>";
@@ -93,13 +110,13 @@ function create_table(nome_consulta, id_table, titulo_consulta, categoria) {
     });
 }
 
-function log_out(){
+function log_out() {
     //TODO Matar a sessão
     alert("Usuário deslogado");
     window.location.href = "../pages/Login/";
 }
 
-function chart1(){
+function chart1(id) {
     var nome_consulta = "consulta_combustivel_mais_vendido";
     $.ajax({
         type: "GET",
@@ -108,45 +125,46 @@ function chart1(){
         success: function(response) {
             labels = [];
             series = [];
-            for(i=0;i<response.length;i++){
+            for (i = 0; i < response.length; i++) {
                 labels.push(response[i]["Nome do Combustivel"]);
                 series.push(response[i]["Quantidade de Vezes"])
             }
-            
-            if ($('#dash_consulta_1').length != 0 && $('#dash_consulta_1').length != 0) {
-                // ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- //
-            
+
+            if ($('#'+id).length != 0 && $('#'+id).length != 0) {
                 chart = {
-                  labels: labels,
-                  series: [
-                    series
-                  ]
+                    labels: labels,
+                    series: [
+                        series
+                    ],
+                    plugings:[
+                        Chartist.plugins.tooltip()
+                    ]
                 };
-            
+
                 optionsDailySalesChart = {
-                  lineSmooth: Chartist.Interpolation.cardinal({
-                    tension: 0
-                  }),
-                  low: 0,
-                  high: 20, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-                  chartPadding: {
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                  },
+                    lineSmooth: Chartist.Interpolation.cardinal({
+                        tension: 0
+                    }),
+                    low: 0,
+                    high: 20,
+                    chartPadding: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    },
                 }
-            
-                var dailySalesChart = new Chartist.Line('#dash_consulta_1', chart, optionsDailySalesChart);
-            
-                var animationHeaderChart = new Chartist.Line('#dash_consulta_1', chart, optionsDailySalesChart);
-            
-              }
+
+                var dailySalesChart = new Chartist.Line('#'+id, chart, optionsDailySalesChart);
+
+                var animationHeaderChart = new Chartist.Line('#'+id, chart, optionsDailySalesChart);
+                setTooltip(id,response,"");
+            }
         }
     });
 }
 
-function chart2(){
+function chart2(id) {
     var nome_consulta = "consulta_posto_mais_vendas";
     $.ajax({
         type: "GET",
@@ -155,7 +173,7 @@ function chart2(){
         success: function(response) {
             labels = [];
             series = [];
-            for(i=0;i<response.length;i++){
+            for (i = 0; i < response.length; i++) {
                 labels.push(get_first_letter(response[i]["NomeDoPosto"]));
                 series.push(response[i]["Vezes"])
             }
@@ -167,86 +185,212 @@ function chart2(){
             };
             var optionsWebsiteViewsChart = {
                 axisX: {
-                showGrid: false
+                    showGrid: false
                 },
+                plugings:[
+                    Chartist.plugins.tooltip()
+                ],
                 low: 0,
                 high: 10,
                 chartPadding: {
-                top: 0,
-                right: 5,
-                bottom: 0,
-                left: 0
+                    top: 0,
+                    right: 5,
+                    bottom: 0,
+                    left: 0
                 }
             };
             var responsiveOptions = [
                 ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
-                axisX: {
-                    labelInterpolationFnc: function(value) {
-                    return value[0];
+                    seriesBarDistance: 5,
+                    axisX: {
+                        labelInterpolationFnc: function(value) {
+                            return value[0];
+                        }
                     }
-                }
                 }]
             ];
-            var websiteViewsChart = Chartist.Bar('#dash_consulta_2', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
-        
+            var websiteViewsChart = Chartist.Bar('#'+id, dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
+
             //start animation for the Emails Subscription Chart
             md.startAnimationForBarChart(websiteViewsChart);
+            setTooltip(id,response,"NomeDoPosto");
         }
     });
 }
 
-function chart3(){
+function chart3(id) {
     var nome_consulta = "consulta_qtd_vendas";
     $.ajax({
         type: "GET",
         url: "../php/consultas.php",
         data: "consulta=" + nome_consulta,
         success: function(response) {
-                labels = [];
-                series = [];
-                for(i=0;i<response.length;i++){
-                    labels.push(get_first_letter(response[i]["Nome fantasia"]));
-                    series.push(response[i]["Quantidade"])
-                }
-                dataCompletedTasksChart = {
-                  labels: labels,
-                  series: [
+            labels = [];
+            series = [];
+            for (i = 0; i < response.length; i++) {
+                labels.push(get_first_letter(response[i]["Nome fantasia"]));
+                series.push(response[i]["Quantidade"])
+            }
+            dataCompletedTasksChart = {
+                labels: labels,
+                series: [
                     series
-                  ]
-                };
-          
-                optionsCompletedTasksChart = {
-                  lineSmooth: Chartist.Interpolation.cardinal({
+                ]
+            };
+
+            optionsCompletedTasksChart = {
+                lineSmooth: Chartist.Interpolation.cardinal({
                     tension: 0
-                  }),
-                  low: 0,
-                  high: 7, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-                  chartPadding: {
+                }),
+                low: 0,
+                high: 7,
+                chartPadding: {
                     top: 0,
                     right: 0,
                     bottom: 0,
                     left: 0
-                  }
                 }
-          
-                var completedTasksChart = new Chartist.Line('#dash_consulta_3', dataCompletedTasksChart, optionsCompletedTasksChart);
-          
-                // start animation for the Completed Tasks Chart - Line Chart
-                md.startAnimationForLineChart(completedTasksChart);
+            }
+
+            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            md.startAnimationForLineChart(completedTasksChart);
+            setTooltip(id,response,"Nome fantasia");
         }
     });
 }
 
-function media_apuracao(id){
+function chart4(id) {
+    var nome_consulta = "consulta_qtd_vendas";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response) {
+            labels = [];
+            series = [];
+            for (i = 0; i < response.length; i++) {
+                labels.push(get_first_letter(response[i]["Nome fantasia"]));
+                series.push(response[i]["Quantidade"])
+            }
+            dataCompletedTasksChart = {
+                labels: labels,
+                series: [
+                    series
+                ]
+            };
+
+            optionsCompletedTasksChart = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                }),
+                low: 0,
+                high: 7,
+                chartPadding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                }
+            }
+
+            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            md.startAnimationForLineChart(completedTasksChart);
+            setTooltip(id,response,"Nome fantasia");
+        }
+    });
+}
+
+function chart5(id) {
+    var nome_consulta = "consulta_qtd_vendas";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response) {
+            labels = [];
+            series = [];
+            for (i = 0; i < response.length; i++) {
+                labels.push(get_first_letter(response[i]["Nome fantasia"]));
+                series.push(response[i]["Quantidade"])
+            }
+            dataCompletedTasksChart = {
+                labels: labels,
+                series: [
+                    series
+                ]
+            };
+
+            optionsCompletedTasksChart = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                }),
+                low: 0,
+                high: 7,
+                chartPadding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                }
+            }
+
+            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            md.startAnimationForLineChart(completedTasksChart);
+            setTooltip(id,response,"Nome fantasia");
+        }
+    });
+}
+
+function chart6(id) {
+    var nome_consulta = "consulta_qtd_vendas";
+    $.ajax({
+        type: "GET",
+        url: "../php/consultas.php",
+        data: "consulta=" + nome_consulta,
+        success: function(response) {
+            labels = [];
+            series = [];
+            for (i = 0; i < response.length; i++) {
+                labels.push(get_first_letter(response[i]["Nome fantasia"]));
+                series.push(response[i]["Quantidade"])
+            }
+            dataCompletedTasksChart = {
+                labels: labels,
+                series: [
+                    series
+                ]
+            };
+
+            optionsCompletedTasksChart = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                }),
+                low: 0,
+                high: 7,
+                chartPadding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                }
+            }
+
+            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            md.startAnimationForLineChart(completedTasksChart);
+            setTooltip(id,response,"Nome fantasia");
+        }
+    });
+}
+
+function media_apuracao(id) {
     var nome_consulta = "consulta_media_preco";
     $.ajax({
         type: "GET",
         url: "../php/consultas.php",
         data: "consulta=" + nome_consulta,
-        success: function(response){
+        success: function(response) {
             value = parseFloat(response[0]["Media"]);
-            $("#"+id).text("$"+value.toFixed(2));
+            $("#" + id).text("$" + value.toFixed(2));
         }
     });
 }

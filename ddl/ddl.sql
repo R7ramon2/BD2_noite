@@ -109,3 +109,8 @@ CREATE TABLE IF NOT EXISTS Tipo_Usuario(
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)  
 );
+
+CREATE TABLE IF NOT EXISTS Usuario_Logado(
+    nome VARCHAR(30) NOT NULL,
+    token VARCHAR(255) NOT NULL
+)
