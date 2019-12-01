@@ -123,7 +123,7 @@ join Vende where (select MIN(Vende.valor_litro) from Vende) = Vende.valor_litro 
 Cidade.id_cidade = ID_Da_Cidade;
 end //
 DELIMITER ;
-call Posto_mais_barato(1);
+call Posto_mais_barato();
 
 DELIMITER //
 create trigger Antes_De_Inserir_Usuario
@@ -148,4 +148,3 @@ end if;
 end //
 DELIMITER ;
 call Usuario_Checker('sophlav');
-    

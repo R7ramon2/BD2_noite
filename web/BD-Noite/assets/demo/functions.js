@@ -135,9 +135,6 @@ function chart1(id) {
                     labels: labels,
                     series: [
                         series
-                    ],
-                    plugings:[
-                        Chartist.plugins.tooltip()
                     ]
                 };
 
@@ -187,9 +184,6 @@ function chart2(id) {
                 axisX: {
                     showGrid: false
                 },
-                plugings:[
-                    Chartist.plugins.tooltip()
-                ],
                 low: 0,
                 high: 10,
                 chartPadding: {
@@ -260,17 +254,18 @@ function chart3(id) {
 }
 
 function chart4(id) {
-    var nome_consulta = "consulta_qtd_vendas";
+    var nome_consulta = "consulta_cidade_mais_venda";
     $.ajax({
         type: "GET",
         url: "../php/consultas.php",
         data: "consulta=" + nome_consulta,
         success: function(response) {
+            console.log(response);
             labels = [];
             series = [];
             for (i = 0; i < response.length; i++) {
-                labels.push(get_first_letter(response[i]["Nome fantasia"]));
-                series.push(response[i]["Quantidade"])
+                labels.push(response[i]["Nome da Cidade"]);
+                series.push(response[i]["Vezes"])
             }
             dataCompletedTasksChart = {
                 labels: labels,
@@ -296,6 +291,9 @@ function chart4(id) {
             var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
             md.startAnimationForLineChart(completedTasksChart);
             setTooltip(id,response,"Nome fantasia");
+        },
+        error:function(response){
+            console.log(response);
         }
     });
 }

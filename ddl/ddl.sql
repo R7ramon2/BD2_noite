@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS Vende(
 CREATE TABLE IF NOT EXISTS Usuario(
     id_usuario INT NOT NULL auto_increment,
     login VARCHAR(30) NOT NULL,
-    senha VARCHAR(30),
+    senha VARCHAR(255),
     id_pessoa INT NOT NULL,
     PRIMARY KEY (id_usuario),
     FOREIGN KEY (id_pessoa) REFERENCES Pessoa(id_pessoa)

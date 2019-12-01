@@ -33,8 +33,8 @@ elseif($consulta_name == "consulta_qtd_vendas"){
     $retorno = json_encode($conexao->consulta_qtd_vendas());
     echo $retorno;
 }
-elseif($consulta_name == "gabi"){
-    $retorno = json_encode($conexao->gabi());
+elseif($consulta_name == "consulta_cidade_mais_venda"){
+    $retorno = json_encode($conexao->consulta_cidade_mais_venda());
     echo $retorno;
 }
 

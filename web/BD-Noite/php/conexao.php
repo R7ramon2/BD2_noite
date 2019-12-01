@@ -19,7 +19,7 @@ class Conexao {
         $sql = "select count(*) as login_status from Usuario where login = :login and senha = :senha;";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':login',$user);
-        $stmt->bindParam(':senha',$senha);
+        $stmt->bindParam(':senha',md5($senha));
         $stmt->execute();
         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $stmt->fetchAll()[0];
@@ -100,6 +100,25 @@ class Conexao {
         $stmt->execute();
         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
   
+        return $stmt->fetchAll();
+    }
+
+    function consulta_cidade_mais_venda(){
+        $sql = "SELECT c.nome as \"Nome da Cidade\", COUNT(c.nome) as Vezes from Cidade as c INNER JOIN Bairro as b
+        ON b.id_cidade = c.id_cidade        
+        INNER JOIN Posto as p
+        ON p.id_bairro = b.id_bairro        
+        INNER JOIN Posto_combustivel as pc
+        ON pc.cnpj = p.cnpj        
+        INNER JOIN Preco as pr
+        ON pr.id_preco = pc.id_preco
+        GROUP BY c.nome
+        ORDER BY Vezes DESC";
+        echo $sql;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
         return $stmt->fetchAll();
     }
 
