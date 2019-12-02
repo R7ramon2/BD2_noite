@@ -114,7 +114,6 @@ class Conexao {
         ON pr.id_preco = pc.id_preco
         GROUP BY c.nome
         ORDER BY Vezes DESC";
-        echo $sql;
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);

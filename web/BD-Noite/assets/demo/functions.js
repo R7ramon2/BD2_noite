@@ -116,114 +116,32 @@ function log_out() {
     window.location.href = "../pages/Login/";
 }
 
-function chart1(id) {
-    var nome_consulta = "consulta_combustivel_mais_vendido";
+function chart(id,intervalA,intervalB,field_tooltip,chartType,consulta,color_chart,title,subTitle){
+    var nome_consulta = consulta;
+    var text_btn = "";
+    if (chartType == "line"){
+        text_btn = "bar";
+    }
+    else{
+        text_btn = "line";
+    }
+    var html = '<div class="col-md-4"><div class="card card-chart"> <div class="card-header card-header-'+color_chart+'"> <div class="ct-chart" id="'+id+'"></div></div><div class="card-body"><div style = "float: right;"><button type="button" onclick=\'chart("'+id+'",'+intervalA+','+intervalB+',"'+field_tooltip+'",this.textContent,"'+consulta+'","'+color_chart+'","'+title+'","'+subTitle+'")\' class="btn btn-'+color_chart+' btn_toogle">'+text_btn+'</button></div><h4 class="card-title">'+title+'</h4><p class="card-category"></div><div class="card-footer"><div class="stats"><i class="material-icons">access_time</i> '+subTitle+'</div></div></div></div>';
     $.ajax({
         type: "GET",
         url: "../php/consultas.php",
         data: "consulta=" + nome_consulta,
         success: function(response) {
+            cabecalho = get_keys(response);
             labels = [];
             series = [];
             for (i = 0; i < response.length; i++) {
-                labels.push(response[i]["Nome do Combustivel"]);
-                series.push(response[i]["Quantidade de Vezes"])
-            }
-
-            if ($('#'+id).length != 0 && $('#'+id).length != 0) {
-                chart = {
-                    labels: labels,
-                    series: [
-                        series
-                    ]
-                };
-
-                optionsDailySalesChart = {
-                    lineSmooth: Chartist.Interpolation.cardinal({
-                        tension: 0
-                    }),
-                    low: 0,
-                    high: 20,
-                    chartPadding: {
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        left: 0
-                    },
+                if (field_tooltip != ""){
+                    labels.push(get_first_letter(response[i][cabecalho[0]]));
                 }
-
-                var dailySalesChart = new Chartist.Line('#'+id, chart, optionsDailySalesChart);
-
-                var animationHeaderChart = new Chartist.Line('#'+id, chart, optionsDailySalesChart);
-                setTooltip(id,response,"");
-            }
-        }
-    });
-}
-
-function chart2(id) {
-    var nome_consulta = "consulta_posto_mais_vendas";
-    $.ajax({
-        type: "GET",
-        url: "../php/consultas.php",
-        data: "consulta=" + nome_consulta,
-        success: function(response) {
-            labels = [];
-            series = [];
-            for (i = 0; i < response.length; i++) {
-                labels.push(get_first_letter(response[i]["NomeDoPosto"]));
-                series.push(response[i]["Vezes"])
-            }
-            var dataWebsiteViewsChart = {
-                labels: labels,
-                series: [
-                    series
-                ]
-            };
-            var optionsWebsiteViewsChart = {
-                axisX: {
-                    showGrid: false
-                },
-                low: 0,
-                high: 10,
-                chartPadding: {
-                    top: 0,
-                    right: 5,
-                    bottom: 0,
-                    left: 0
+                else{
+                    labels.push(response[i][cabecalho[0]]);
                 }
-            };
-            var responsiveOptions = [
-                ['screen and (max-width: 640px)', {
-                    seriesBarDistance: 5,
-                    axisX: {
-                        labelInterpolationFnc: function(value) {
-                            return value[0];
-                        }
-                    }
-                }]
-            ];
-            var websiteViewsChart = Chartist.Bar('#'+id, dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
-
-            //start animation for the Emails Subscription Chart
-            md.startAnimationForBarChart(websiteViewsChart);
-            setTooltip(id,response,"NomeDoPosto");
-        }
-    });
-}
-
-function chart3(id) {
-    var nome_consulta = "consulta_qtd_vendas";
-    $.ajax({
-        type: "GET",
-        url: "../php/consultas.php",
-        data: "consulta=" + nome_consulta,
-        success: function(response) {
-            labels = [];
-            series = [];
-            for (i = 0; i < response.length; i++) {
-                labels.push(get_first_letter(response[i]["Nome fantasia"]));
-                series.push(response[i]["Quantidade"])
+                series.push(response[i][cabecalho[1]])
             }
             dataCompletedTasksChart = {
                 labels: labels,
@@ -236,8 +154,8 @@ function chart3(id) {
                 lineSmooth: Chartist.Interpolation.cardinal({
                     tension: 0
                 }),
-                low: 0,
-                high: 7,
+                low: intervalA,
+                high: intervalB,
                 chartPadding: {
                     top: 0,
                     right: 0,
@@ -245,137 +163,18 @@ function chart3(id) {
                     left: 0
                 }
             }
-
-            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            if($("#"+id).attr("id") === undefined){
+                $("#charts").append(html);
+            }
+            if(chartType == "line"){
+                var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            }
+            else{
+                var completedTasksChart = new Chartist.Bar('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
+            }
+            
             md.startAnimationForLineChart(completedTasksChart);
-            setTooltip(id,response,"Nome fantasia");
-        }
-    });
-}
-
-function chart4(id) {
-    var nome_consulta = "consulta_cidade_mais_venda";
-    $.ajax({
-        type: "GET",
-        url: "../php/consultas.php",
-        data: "consulta=" + nome_consulta,
-        success: function(response) {
-            console.log(response);
-            labels = [];
-            series = [];
-            for (i = 0; i < response.length; i++) {
-                labels.push(response[i]["Nome da Cidade"]);
-                series.push(response[i]["Vezes"])
-            }
-            dataCompletedTasksChart = {
-                labels: labels,
-                series: [
-                    series
-                ]
-            };
-
-            optionsCompletedTasksChart = {
-                lineSmooth: Chartist.Interpolation.cardinal({
-                    tension: 0
-                }),
-                low: 0,
-                high: 7,
-                chartPadding: {
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                }
-            }
-
-            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
-            md.startAnimationForLineChart(completedTasksChart);
-            setTooltip(id,response,"Nome fantasia");
-        },
-        error:function(response){
-            console.log(response);
-        }
-    });
-}
-
-function chart5(id) {
-    var nome_consulta = "consulta_qtd_vendas";
-    $.ajax({
-        type: "GET",
-        url: "../php/consultas.php",
-        data: "consulta=" + nome_consulta,
-        success: function(response) {
-            labels = [];
-            series = [];
-            for (i = 0; i < response.length; i++) {
-                labels.push(get_first_letter(response[i]["Nome fantasia"]));
-                series.push(response[i]["Quantidade"])
-            }
-            dataCompletedTasksChart = {
-                labels: labels,
-                series: [
-                    series
-                ]
-            };
-
-            optionsCompletedTasksChart = {
-                lineSmooth: Chartist.Interpolation.cardinal({
-                    tension: 0
-                }),
-                low: 0,
-                high: 7,
-                chartPadding: {
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                }
-            }
-
-            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
-            md.startAnimationForLineChart(completedTasksChart);
-            setTooltip(id,response,"Nome fantasia");
-        }
-    });
-}
-
-function chart6(id) {
-    var nome_consulta = "consulta_qtd_vendas";
-    $.ajax({
-        type: "GET",
-        url: "../php/consultas.php",
-        data: "consulta=" + nome_consulta,
-        success: function(response) {
-            labels = [];
-            series = [];
-            for (i = 0; i < response.length; i++) {
-                labels.push(get_first_letter(response[i]["Nome fantasia"]));
-                series.push(response[i]["Quantidade"])
-            }
-            dataCompletedTasksChart = {
-                labels: labels,
-                series: [
-                    series
-                ]
-            };
-
-            optionsCompletedTasksChart = {
-                lineSmooth: Chartist.Interpolation.cardinal({
-                    tension: 0
-                }),
-                low: 0,
-                high: 7,
-                chartPadding: {
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0
-                }
-            }
-
-            var completedTasksChart = new Chartist.Line('#'+id, dataCompletedTasksChart, optionsCompletedTasksChart);
-            md.startAnimationForLineChart(completedTasksChart);
-            setTooltip(id,response,"Nome fantasia");
+            setTooltip(id,response,field_tooltip);
         }
     });
 }
