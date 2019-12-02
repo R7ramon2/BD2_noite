@@ -30,6 +30,8 @@
 <body>
 	
 	<div class="limiter">
+		<div id = "login_msg" style="display: none;text-align: center;" role="alert">
+		</div>
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<!-- <form class="login100-form validate-form"> -->
@@ -112,8 +114,21 @@
 				success: function(response){
 					console.log(response);
 					if (response.login_status == "1"){
-						alert("Você será direcionado para o Dashboard de "+ user);
-						window.location.href = "../dashboard.html";
+						$("#login_msg").attr("class","alert alert-success");
+						$("#login_msg").html("Você será direcionado para o Dashboard de <b>"+ user + "</b>");
+						$("#login_msg").show("slow");
+						setTimeout(function(){
+							window.location.href = "../dashboard.html";
+						},3000);
+					}
+					else{
+						$("#login_msg").hide("slow");
+						$("#login_msg").attr("class","alert alert-danger");
+						$("#login_msg").html("Usuário ou senha incorretos");
+						$("#login_msg").show("slow");
+						setTimeout(function(){
+							$("#login_msg").hide("slow");
+						},4000);
 					}
 				}
 			});
